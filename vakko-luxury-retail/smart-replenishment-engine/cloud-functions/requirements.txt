@@ -1,0 +1,6 @@
+google-cloud-bigquery==3.13.0
+google-cloud-storage==2.10.0
+functions-framework==3.5.0
+numpy==1.24.3
+pandas==2.0.3
+pytz==2023.3

@@ -1,0 +1,59 @@
+openapi: 3.0.3
+info:
+  title: Suvari Franchise Operations API
+  description: API for franchise partner performance, store network analysis, expansion pipeline, and support ticket management
+  version: 1.0.0
+servers:
+  - url: https://europe-west1-agentspace-ngc.cloudfunctions.net/franchise-ops-query
+    description: Production server
+paths:
+  /:
+    post:
+      summary: Query franchise operations data
+      operationId: queryFranchiseOps
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: Natural language query about franchise operations
+                  example: "Show me partner performance for this week"
+              additionalProperties: true
+      responses:
+        '200':
+          description: Successful query response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  intent:
+                    type: string
+                    description: Detected query intent
+                  query:
+                    type: string
+                    description: Original query text
+                  data:
+                    type: array
+                    description: Query results
+                  analysis:
+                    type: object
+                    description: Franchise operations analysis and insights
+                  timestamp:
+                    type: string
+                    description: Response timestamp
+                additionalProperties: true
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /health:
+    get:
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: Service is healthy

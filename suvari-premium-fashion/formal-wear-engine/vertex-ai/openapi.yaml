@@ -1,0 +1,59 @@
+openapi: 3.0.3
+info:
+  title: Suvari Formal Wear Analytics API
+  description: API for querying formal wear performance metrics, bundle analysis, size fitting, and seasonal trends
+  version: 1.0.0
+servers:
+  - url: https://europe-west1-agentspace-ngc.cloudfunctions.net/formal-wear-query
+    description: Production server
+paths:
+  /:
+    post:
+      summary: Query formal wear analytics
+      operationId: queryFormalWear
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: Natural language query about formal wear data
+                  example: "Show me suit sales performance for this week"
+              additionalProperties: true
+      responses:
+        '200':
+          description: Successful query response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  intent:
+                    type: string
+                    description: Detected query intent
+                  query:
+                    type: string
+                    description: Original query text
+                  data:
+                    type: array
+                    description: Query results
+                  analysis:
+                    type: object
+                    description: Data analysis and insights
+                  timestamp:
+                    type: string
+                    description: Response timestamp
+                additionalProperties: true
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /health:
+    get:
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: Service is healthy
